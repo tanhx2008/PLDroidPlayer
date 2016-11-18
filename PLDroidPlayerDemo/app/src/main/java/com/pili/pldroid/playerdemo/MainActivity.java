@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pili.pldroid.player.PLNetworkManager;
+import com.pili.pldroid.playerdemo.utils.Utils;
 
 import java.net.UnknownHostException;
 
@@ -21,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String DEFAULT_TEST_URL = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
 
     private static final String[] DEFAULT_PLAYBACK_DOMAIN_ARRAY = {
-            "live.hkstv.hk.lxdns.com"
+            "live.hkstv.hk.lxdns.com",
+            "pili-live-rtmp.pilitest.qiniucdn.com",
+            "pili-live-hdl.pilitest.qiniucdn.com"
     };
 
     private Spinner mActivitySpinner;
@@ -99,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, cls);
         intent.putExtra("videoPath", videopath);
         if (mDecodeTypeRadioGroup.getCheckedRadioButtonId() == R.id.RadioHWDecode) {
-            intent.putExtra("mediaCodec", 1);
+            intent.putExtra("mediaCodec", Utils.MEDIA_CODEC_HW_DECODE);
         } else {
-            intent.putExtra("mediaCodec", 0);
+            intent.putExtra("mediaCodec", Utils.MEDIA_CODEC_SW_DECODE);
         }
         if (mStreamingTypeRadioGroup.getCheckedRadioButtonId() == R.id.RadioLiveStreaming) {
             intent.putExtra("liveStreaming", 1);

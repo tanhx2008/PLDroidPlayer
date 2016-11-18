@@ -69,7 +69,7 @@ public class PLMediaPlayerActivity extends VideoPlayerBaseActivity {
         }
 
         // 1 -> hw codec enable, 0 -> disable [recommended]
-        int codec = getIntent().getIntExtra("mediaCodec", 0);
+        int codec = getIntent().getIntExtra("mediaCodec", Utils.MEDIA_CODEC_SW_DECODE);
         mAVOptions.setInteger(AVOptions.KEY_MEDIACODEC, codec);
 
         // whether start play automatically after prepared, default value is 1
@@ -307,6 +307,10 @@ public class PLMediaPlayerActivity extends VideoPlayerBaseActivity {
                     break;
                 case PLMediaPlayer.ERROR_CODE_READ_FRAME_TIMEOUT:
                     showToastTips("Read frame timeout !");
+                    isNeedReconnect = true;
+                    break;
+                case PLMediaPlayer.ERROR_CODE_HW_DECODE_FAILURE:
+                    mAVOptions.setInteger(AVOptions.KEY_MEDIACODEC, Utils.MEDIA_CODEC_SW_DECODE);
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.MEDIA_ERROR_UNKNOWN:

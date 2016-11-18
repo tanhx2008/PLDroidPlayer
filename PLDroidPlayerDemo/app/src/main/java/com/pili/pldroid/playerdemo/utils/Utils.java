@@ -6,6 +6,9 @@ import android.net.NetworkInfo;
 
 public class Utils {
 
+    public final static int MEDIA_CODEC_SW_DECODE = 0;
+    public final static int MEDIA_CODEC_HW_DECODE = 1;
+
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
