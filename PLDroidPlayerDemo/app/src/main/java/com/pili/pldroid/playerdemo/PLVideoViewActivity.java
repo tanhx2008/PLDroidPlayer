@@ -71,7 +71,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
         mIsLiveStreaming = getIntent().getIntExtra("liveStreaming", 1);
 
         // 1 -> hw codec enable, 0 -> disable [recommended]
-        int codec = getIntent().getIntExtra("mediaCodec", Utils.MEDIA_CODEC_SW_DECODE);
+        int codec = getIntent().getIntExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
         setOptions(codec);
 
         // Set some listeners
@@ -184,7 +184,7 @@ public class PLVideoViewActivity extends VideoPlayerBaseActivity {
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.ERROR_CODE_HW_DECODE_FAILURE:
-                    setOptions(Utils.MEDIA_CODEC_SW_DECODE);
+                    setOptions(AVOptions.MEDIA_CODEC_SW_DECODE);
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.MEDIA_ERROR_UNKNOWN:

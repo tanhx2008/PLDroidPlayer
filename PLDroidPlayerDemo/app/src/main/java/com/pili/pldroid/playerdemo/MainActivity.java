@@ -2,7 +2,6 @@ package com.pili.pldroid.playerdemo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLNetworkManager;
 import com.pili.pldroid.playerdemo.utils.Utils;
 
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
             "PLAudioPlayerActivity",
             "PLVideoViewActivity",
             "PLVideoTextureActivity",
-            "VideoViewActivity"
     };
 
     @Override
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         TextView mVersionInfoTextView = (TextView) findViewById(R.id.version_info);
         mVersionInfoTextView.setText("Version: " + BuildConfig.VERSION_NAME);
 
-        mEditText = (EditText)findViewById(R.id.VideoPathEdit);
+        mEditText = (EditText) findViewById(R.id.VideoPathEdit);
         mEditText.setText(DEFAULT_TEST_URL);
 
         mStreamingTypeRadioGroup = (RadioGroup) findViewById(R.id.StreamingTypeRadioGroup);
@@ -86,15 +85,17 @@ public class MainActivity extends AppCompatActivity {
     public void jumpToPlayerActivity(String videopath) {
         Class<?> cls = null;
         switch (mActivitySpinner.getSelectedItemPosition()) {
-            case 0: cls = PLMediaPlayerActivity.class;
+            case 0:
+                cls = PLMediaPlayerActivity.class;
                 break;
-            case 1: cls = PLAudioPlayerActivity.class;
+            case 1:
+                cls = PLAudioPlayerActivity.class;
                 break;
-            case 2: cls = PLVideoViewActivity.class;
+            case 2:
+                cls = PLVideoViewActivity.class;
                 break;
-            case 3: cls = PLVideoTextureActivity.class;
-                break;
-            case 4: cls = VideoViewActivity.class;
+            case 3:
+                cls = PLVideoTextureActivity.class;
                 break;
             default:
                 return;
@@ -102,9 +103,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, cls);
         intent.putExtra("videoPath", videopath);
         if (mDecodeTypeRadioGroup.getCheckedRadioButtonId() == R.id.RadioHWDecode) {
-            intent.putExtra("mediaCodec", Utils.MEDIA_CODEC_HW_DECODE);
+            intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_HW_DECODE);
+        } else if (mDecodeTypeRadioGroup.getCheckedRadioButtonId() == R.id.RadioSWDecode) {
+            intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_SW_DECODE);
         } else {
-            intent.putExtra("mediaCodec", Utils.MEDIA_CODEC_SW_DECODE);
+            intent.putExtra("mediaCodec", AVOptions.MEDIA_CODEC_AUTO);
         }
         if (mStreamingTypeRadioGroup.getCheckedRadioButtonId() == R.id.RadioLiveStreaming) {
             intent.putExtra("liveStreaming", 1);
